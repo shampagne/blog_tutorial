@@ -15,5 +15,5 @@ require("channels")
 // const images = require.context('../images', true)
 // const imagePath = (name) => images(name, true)
 
-import 'bootstrap';
-import "./stylesheets/application"; //追記
+import "bootstrap";
+import "./stylesheets/application.scss"; //追記
