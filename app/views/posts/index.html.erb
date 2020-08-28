@@ -3,34 +3,21 @@
     <div class="row">
       <div class="col-md-6 px-0">
         <h1 class="display-4 font-italic">Blog-Tutorialでは、Railsでブログサイトを作ります。</h1>
-        <p class="lead my-3">今回作成するブログの機能としては、タグ、画像登録、新規登録、ログイン、いいね、コメント、管理ユーザー等です。</p>
-        <button><a href="#" class="btn btn-primary">ログイン</a></button>
-      </div>
+        <p class="lead my-3">今回作成するブログの機能としては、タグ、画像登録、新規登録、ログイン、いいね、コメント、管理ユーザー等です。</p> <a href="#" class="btn btn-primary">ログイン</a> </div>
       <div class="col-md-6">
         <h3 class="text-center">注目の話題</h3>
+        <!-- 以下修正 -->
         <h4>
-          <a href="#">
-            <button type="button" class="badge badge-primary my-1">オリンピック</button>
-          </a>
-          <a href="#">
-            <button type="button" class="badge badge-secondary my-1">ねこ</button>
-          </a>
-          <a href="#">
-            <button type="button" class="badge badge-success my-1">Twitter</button>
-          </a>
-          <a href="#">
-            <button type="button" class="badge badge-danger my-1">今年の漢字</button>
-          </a>
-          <a href="#">
-            <button type="button" class="badge badge-warning my-1">IT企業</button>
-          </a>
-          <a href="#">
-            <button type="button" class="badge badge-info my-1">なぞなぞ</button>
-          </a>
-          <a href="#">
-            <button type="button" class="badge badge-light my-1">日本脱出</button>
-          </a>
+        <!-- タグ付けとして利用されているタグがあればそれのみ表示 -->
+        <% if @tags.present? %>
+          <% @tags.each do |tag| %>
+            <% if tag.posts.present? %>
+              <%= link_to "##{tag.name}", posts_path(tag_id: tag.id), class: "#{tag.color}" %>
+            <% end %>
+          <% end %>
+        <% end %>
         </h4>
+        <!-- ここまで修正 -->
       </div>
     </div>
   </div>
@@ -38,22 +25,29 @@
   <div class="row">
     <% @posts.each do |post| %>
       <div class="col-md-4">
-        <div class="card mb-4 box-shadow">
-          <img src="http://placehold.it/640x426" class="card-img-top">
+        <div class="card mb-4 box-shadow"> <img src="http://placehold.it/640x426" class="card-img-top">
           <div class="card-body">
             <div class="text-muted text-right">
               <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" width=20 height=20 alt="">
               <span><a href="#">ユーザーさん</a></span>
             </div>
-            <h4 class="my-2 text-center"><strong><%= post.title %></strong></h4>
-            <h5 class="text-center"><u><%= post.brief %></u></h5>
+            <h4 class="my-2 text-center">
+              <strong><%= post.title %></strong>
+            </h4>
+            <h5 class="text-center">
+              <u><%= post.brief %></u>
+            </h5>
             <p class="card-text">
               <%= post.body.truncate(100) %>
               <%= link_to 'さらに読む', post %>
             </p>
-            <div class="badge badge-secondary badge-sm">
-              <a href="#">タグ</a>
+            <!-- 以下修正 -->
+            <div>
+              <% post.tags.each do |tag| %>
+                <%= link_to "##{tag.name}", tag, class: "#{tag.color}" %>
+              <% end %>s
             </div>
+            <!-- ここまで修正 -->
             <div class="d-flex justify-content-between align-items-center mt-1">
               <%= link_to '編集', edit_post_path(post), class: "btn btn-sm btn-outline-secondary" %>
               <%= link_to '削除', post, method: :delete, data: { confirm: '完全に削除しますか？' }, class: "btn btn-sm btn-outline-secondary" %>

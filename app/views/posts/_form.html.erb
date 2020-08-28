@@ -1,16 +1,17 @@
+# views/posts/_form.html.erb
+
 <%= form_with(model: post, local: true) do |form| %>
   <% if post.errors.any? %>
     <div id="error_explanation">
       <h2>
         <%= pluralize(post.errors.count, "error") %>
-        prohibited this post from being saved:
-      </h2>
+        prohibited this post from being saved:</h2>
       <ul>
         <% post.errors.full_messages.each do |message| %>
           <li>
             <%= message %>
           </li>
-          <% end %>
+        <% end %>
       </ul>
     </div>
   <% end %>
@@ -26,6 +27,14 @@
     <%= form.label "内容" %>
     <%= form.text_area :body, class: "form-control" %>
   </div>
+  <!-- 以下追加 -->
+  <div class="field">
+    <% @tags.each do |tag| %>
+      <%= check_box_tag "post[tag_ids][]", tag.id, @post.tags.include?(tag) %>
+      <%= form.label "##{tag.name}", class: "#{tag.color}" %> <br/>
+    <% end %>
+  </div>
+  <!-- ここまで追加 -->
   <div class="actions text-center">
     <%= form.submit class: "btn btn-primary" %>
   </div>

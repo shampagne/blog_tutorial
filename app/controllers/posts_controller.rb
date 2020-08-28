@@ -1,20 +1,30 @@
+# controllers/posts_controller.rb
+
 class PostsController < ApplicationController
   before_action :set_post, only: [:show, :edit, :update, :destroy]
 
   # GET /posts
   # GET /posts.json
   def index
-    @posts = Post.all
+    @tags = Tag.all
+    if params[:tag_id]
+      @tag = Tag.find(params[:tag_id])
+      @posts = @tag.posts.order(created_at: "DESC")
+    else
+      @posts = Post.order(created_at: "DESC")
+    end
   end
 
   # GET /posts/1
   # GET /posts/1.json
   def show
+    @tags = Tag.all    #追加
   end
 
   # GET /posts/new
   def new
     @post = Post.new
+    @tags = Tag.all    #追加
   end
 
   # GET /posts/1/edit
@@ -28,10 +38,10 @@ class PostsController < ApplicationController
 
     respond_to do |format|
       if @post.save
-        format.html { redirect_to @post, notice: 'Post was successfully created.' }
+        format.html { redirect_to @post, success: '記事を投稿しました。' } #修正
         format.json { render :show, status: :created, location: @post }
       else
-        format.html { render :new }
+        format.html { redirect_to new_post_path, alert: '記事を投稿できませんでした。' } #修正
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
@@ -42,10 +52,10 @@ class PostsController < ApplicationController
   def update
     respond_to do |format|
       if @post.update(post_params)
-        format.html { redirect_to @post, notice: 'Post was successfully updated.' }
+        format.html { redirect_to @post, sucess: '記事を更新しました。' } #修正
         format.json { render :show, status: :ok, location: @post }
       else
-        format.html { render :edit }
+        format.html {redirect_t edit_post_path, slert: '記事を更新できませんでした。' } #修正
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
@@ -56,7 +66,7 @@ class PostsController < ApplicationController
   def destroy
     @post.destroy
     respond_to do |format|
-      format.html { redirect_to posts_url, notice: 'Post was successfully destroyed.' }
+      format.html { redirect_to posts_url, error: '記事を削除しました。' } #修正
       format.json { head :no_content }
     end
   end
@@ -67,8 +77,8 @@ class PostsController < ApplicationController
       @post = Post.find(params[:id])
     end
 
-    # Only allow a list of trusted parameters through.
+    # Never trust parameters from the scary internet, only allow the white list through.
     def post_params
-      params.require(:post).permit(:title, :brief, :body)
+      params.require(:post).permit(:title, :brief, :body, {:tag_ids => []})    #追加
     end
 end
