@@ -35,7 +35,7 @@
           <div class="card-body">
             <div class="text-muted text-right">
               <img src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" width=20 height=20 alt="">
-              <span><a href="#">ユーザーさん</a></span>
+              <span><%= link_to "@#{post.user.name}", users_path(user_id: post.user.id), class: "text-muted" %></span>
             </div>
             <h4 class="my-2 text-center">
               <strong><%= post.title %></strong>

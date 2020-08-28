@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'users/index'
   root 'posts#index'
   resources :posts
   resources :tags
