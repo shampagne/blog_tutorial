@@ -3,7 +3,13 @@
     <div class="row">
       <div class="col-md-6 px-0">
         <h1 class="display-4 font-italic">Blog-Tutorialでは、Railsでブログサイトを作ります。</h1>
-        <p class="lead my-3">今回作成するブログの機能としては、タグ、画像登録、新規登録、ログイン、いいね、コメント、管理ユーザー等です。</p> <a href="#" class="btn btn-primary">ログイン</a> </div>
+        <p class="lead my-3">今回作成するブログの機能としては、タグ、画像登録、新規登録、ログイン、いいね、コメント、管理ユーザー等です。</p>
+        <% if user_signed_in? %>     
+          <%= link_to "投稿する", new_post_path, class: "btn btn-primary" %>
+        <% else %>
+          <%= link_to "ログイン", new_user_session_path, class: "btn btn-primary" %>
+        <% end %>
+      </div>
       <div class="col-md-6">
         <h3 class="text-center">注目の話題</h3>
         <!-- 以下修正 -->
