@@ -1,6 +1,8 @@
 # config/routes.rb
 
 Rails.application.routes.draw do
+  devise_for :admin_users, ActiveAdmin::Devise.config
+  ActiveAdmin.routes(self)
   root 'posts#index'
   # 以下修正
   resources :posts do
