@@ -18,7 +18,8 @@ class PostsController < ApplicationController
   # GET /posts/1
   # GET /posts/1.json
   def show
-    @tags = Tag.all    #追加
+    @tags = Tag.all
+    @like = Like.new #追加
   end
 
   # GET /posts/new
