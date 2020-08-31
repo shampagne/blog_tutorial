@@ -19,7 +19,9 @@ class PostsController < ApplicationController
   # GET /posts/1.json
   def show
     @tags = Tag.all
-    @like = Like.new #追加
+    @like = Like.new
+    @comments = @post.comments.includes(:user).all.order(created_at: "DESC")  #追加
+    @comment  = @post.comments.build(user_id: current_user.id) if current_user #追加
   end
 
   # GET /posts/new
