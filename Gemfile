@@ -14,7 +14,7 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 gem 'devise'
 gem 'carrierwave'
-gem 'activeadmin' #追加
+gem 'activeadmin'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
@@ -25,7 +25,14 @@ group :development do
   gem 'listen', '~> 3.2'
   gem 'spring'
   gem 'spring-watcher-listen', '~> 2.0.0'
+  gem 'sqlite3' #ここに移動
 end
+
+#以下追加
+group :production do
+  gem 'pg'
+end
+#ここまで追加
 
 group :test do
   gem 'capybara', '>= 2.15'
