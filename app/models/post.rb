@@ -8,4 +8,5 @@ class Post < ApplicationRecord
   # PostはTagをPostTag中間テーブルを介してたくさん持っている
   has_many :tags, through: :post_tags, dependent: :destroy
   belongs_to :user #追加
+  mount_uploader :image, ImagesUploader # 追加
 end

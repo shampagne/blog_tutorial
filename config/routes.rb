@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  get 'users/index'
   root 'posts#index'
   resources :posts
   resources :tags
@@ -7,4 +6,6 @@ Rails.application.routes.draw do
     registrations: 'users/registrations',
     sessions: 'users/sessions'
   }
+  get '/users', to: 'users#index'
+  get '/users' => 'users#index'
 end
